@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <TextView
+        android:layout_width="143dp"
+        android:layout_height="147dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="50dp"
+        android:text="登录"
+        android:textColor="@color/black"
+        android:textSize="50sp">
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="117dp">
+
+        <TextView
+            android:id="@+id/StuNum"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:text="学号:"
+            android:textColor="@color/black"
+            android:textSize="25sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/stunum"
+            android:layout_width="280dp"
+            android:layout_height="90dp"
+            android:background="@drawable/editext_selector"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/StuNum"
+            android:hint="请输入学号"
+            android:inputType="number"
+            android:textSize="25sp">
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp">
+
+        <TextView
+            android:id="@+id/StuPwd"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:text="密码:"
+            android:textColor="@color/black"
+            android:textSize="25sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/stupwd"
+            android:layout_width="280dp"
+            android:layout_height="90dp"
+            android:background="@drawable/editext_selector"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/StuPwd"
+            android:hint="请输入密码"
+            android:inputType="numberPassword"
+            android:textSize="25sp">
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/remember"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:checked="false"
+            android:padding="10dp"
+            android:text="记住密码"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/froget"
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/white"
+            android:text="忘记密码？"
+            android:textSize="20sp"
+            android:textColor="@color/red">
+        </Button>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="265dp"
+        android:layout_height="94dp"
+        android:layout_marginLeft="75dp"
+        android:paddingTop="20dp">
+
+        <Button
+            android:id="@+id/regedit"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:text="注册"
+            android:textSize="20sp">
+        </Button>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:text="登录"
+            android:textSize="20sp">
+        </Button>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegeditActivity"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="143dp"
+        android:layout_height="147dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="50dp"
+        android:text="注册"
+        android:textColor="@color/black"
+        android:textSize="50dp">
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="117dp">
+
+        <TextView
+            android:id="@+id/StuNum"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:text="学号:"
+            android:textColor="@color/black"
+            android:textSize="25sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/stunum"
+            android:layout_width="280dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/StuNum"
+            android:background="@drawable/editext_selector"
+            android:gravity="left|center"
+            android:hint="请输入学号"
+            android:inputType="number"
+            android:textSize="25sp">
+
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp">
+
+        <TextView
+            android:id="@+id/StuPwd"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:text="密码:"
+            android:textColor="@color/black"
+            android:textSize="25sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/stupwd"
+            android:layout_width="280dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/StuPwd"
+            android:background="@drawable/editext_selector"
+            android:gravity="left|center"
+            android:hint="请输入密码"
+            android:inputType="numberPassword"
+            android:textSize="25sp">
+        </EditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="108dp">
+
+        <TextView
+            android:id="@+id/Pwd"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:text="确认
+            密码:"
+            android:textColor="@color/black"
+            android:textSize="25sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/pwd"
+            android:layout_width="280dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/Pwd"
+            android:background="@drawable/editext_selector"
+            android:gravity="left|center"
+            android:hint="请确认密码"
+            android:inputType="numberPassword"
+            android:textSize="25sp">
+        </EditText>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="265dp"
+        android:layout_height="94dp"
+        android:layout_marginLeft="75dp"
+        android:paddingTop="20dp">
+
+        <Button
+            android:id="@+id/regedit"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:text="注册"
+            android:textSize="20sp">
+        </Button>
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:text="返回"
+            android:textSize="20sp">
+        </Button>
+
+    </RelativeLayout>
+
+</LinearLayout>

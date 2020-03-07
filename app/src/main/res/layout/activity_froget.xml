@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FrogetActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="147dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="50dp"
+        android:text="忘记密码"
+        android:textColor="@color/black"
+        android:textSize="50dp">
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp" >
+
+        <TextView
+            android:id="@+id/password_first"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="输入新密码："
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_password_first"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/password_first"
+            android:background="@drawable/editext_selector"
+            android:gravity="left|center"
+            android:hint="请输入新密码"
+            android:inputType="numberPassword"
+            android:maxLength="11"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp" >
+
+        <TextView
+            android:id="@+id/password_second"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="确认新密码："
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/et_password_second"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/password_second"
+            android:background="@drawable/editext_selector"
+            android:gravity="left|center"
+            android:hint="请再次输入新密码"
+            android:inputType="numberPassword"
+            android:maxLength="11"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp" >
+
+        <TextView
+            android:id="@+id/tx_verifycode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="　　验证码："
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/tx_verifycode" >
+
+            <EditText
+                android:id="@+id/verifycode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/editext_selector"
+                android:gravity="left|center"
+                android:hint="请输入验证码"
+                android:maxLength="6"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/Bt_verifycode"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:text="获取验证码"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="265dp"
+        android:layout_height="94dp"
+        android:layout_marginLeft="75dp"
+        android:paddingTop="20dp">
+
+        <Button
+            android:id="@+id/regedit"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:text="确定"
+            android:textSize="20sp">
+        </Button>
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_alignParentRight="true"
+            android:text="返回"
+            android:textSize="20sp">
+        </Button>
+
+    </RelativeLayout>
+
+</LinearLayout>
