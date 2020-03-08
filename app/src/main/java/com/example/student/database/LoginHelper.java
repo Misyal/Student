@@ -9,11 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class LoginHelper extends SQLiteOpenHelper {
 
-    //private static final String TAG = "LoginHelper";
     private static final String DB_NAME = "user.db"; // 数据库的名称
-    //private static LoginHelper mHelper = null; // 数据库帮助器的实例
     private SQLiteDatabase mDB = null; // 数据库的实例
-    //public static final String TABLE_NAME = "Stuendt"; // 表的名称
 
     public LoginHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
     {
