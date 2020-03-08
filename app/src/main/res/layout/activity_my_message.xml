@@ -11,14 +11,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="个人信息"
-        android:textSize="30sp">
+        android:textSize="30sp"
+        android:paddingTop="10dp">
     </TextView>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/Tstunum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学号："
+            android:textSize="35sp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/Tstunum"
+            android:text=""
+            android:textSize="35sp">
+        </TextView>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="100dp">
-
-
+        android:layout_height="50dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/Tname"
@@ -31,11 +56,36 @@
 
         <EditText
             android:id="@+id/eName"
-            android:layout_width="match_parent"
+            android:layout_width="105dp"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/Tname">
         </EditText>
 
+        <TextView
+            android:id="@+id/Tsex"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_toRightOf="@+id/eName"
+            android:gravity="bottom"
+            android:paddingLeft="20dp"
+            android:text="性别:"
+            android:textSize="35sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/esex"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/Tsex"
+            >
+        </EditText>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     </RelativeLayout>
 
