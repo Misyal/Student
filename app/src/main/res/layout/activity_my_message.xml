@@ -38,10 +38,8 @@
 
     </RelativeLayout>
 
-
-
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingTop="10dp">
 
@@ -73,21 +71,114 @@
 
         </TextView>
 
-        <EditText
+
+        <Spinner
             android:id="@+id/esex"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/Tsex"
-            >
-        </EditText>
+            android:layout_width="78dp"
+            android:layout_height="100dp"
+            android:layout_toRightOf="@+id/Tsex">
+
+        </Spinner>
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/Tclass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="班级:"
+            android:textSize="35sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/eclass"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/Tclass">
+        </EditText>
+
 
     </RelativeLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/Tcollege"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:gravity="bottom"
+            android:text="学院:"
+            android:textSize="35sp">
+        </TextView>
+
+        <EditText
+            android:id="@+id/ecollege"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/Tcollege">
+        </EditText>
+
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/Tprofession"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:gravity="bottom"
+            android:text="专业:"
+            android:textSize="35sp">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/eprofession"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/Tprofession"
+            >
+        </EditText>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="80dp"
+        android:paddingTop="20dp"
+        android:paddingRight="80dp">
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="提交"></Button>
+
+        <Button
+            android:id="@+id/CANNEL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:text="取消"></Button>
+
+    </RelativeLayout>
 
 </LinearLayout>

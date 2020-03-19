@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="70dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -28,9 +28,129 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/TName"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:text="姓名:"
+            android:textSize="35sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/EName"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/TName"
+            android:textSize="35sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TSex"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_toRightOf="@+id/EName"
+            android:paddingLeft="20dp"
+            android:text="性别:"
+            android:textSize="35sp">
+        </TextView>
+
+
+        <TextView
+            android:id="@+id/ESex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/TSex"
+            android:textSize="35sp">
+
+        </TextView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/TClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="班级:"
+            android:textSize="35sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/EClass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/TClass"
+            android:textSize="35sp">
+        </TextView>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp"
+        >
+
+        <TextView
+            android:id="@+id/TCollege"
+            android:layout_width="80dp"
+            android:layout_height="90dp"
+            android:text="学院:"
+            android:textSize="35sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/ECollege"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/TCollege"
+            android:textSize="35sp">
+        </TextView>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/TProfession"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:text="专业:"
+            android:textSize="35sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/EProfession"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/TProfession"
+            android:textSize="35sp"
+            >
+        </TextView>
+
+
+    </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
 
         <Button
             android:id="@+id/mycourse"
@@ -42,7 +162,8 @@
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
 
         <Button
             android:id="@+id/myrecord"
@@ -54,7 +175,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
         <Button
             android:id="@+id/mymessage"
             android:layout_width="wrap_content"
@@ -64,18 +186,15 @@
 
     </LinearLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp">
+        android:layout_height="wrap_content">
 
 
         <Button
             android:id="@+id/quit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:text="退出登录"
             android:textColor="@color/red">

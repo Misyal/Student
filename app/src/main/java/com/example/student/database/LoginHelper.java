@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class LoginHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "user.db"; // 数据库的名称
-    private SQLiteDatabase mDB = null; // 数据库的实例
 
     public LoginHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version)
     {
@@ -20,13 +19,18 @@ public class LoginHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //Log.d(TAG,"OnCreate");
-        //String drop_sql="DROP TABLE IF EXISTS"+TABLE_NAME+";";
-        //Log.d(TAG,"drop_sql:"+drop_sql);
-        //db.execSQL(drop_sql);
         String creat_sql= "CREATE TABLE IF NOT EXISTS Student(StudentNum VARCHAR PRIMARY KEY NOT NULL,StudentPassword VARCHAR NOT NULL);";
-        //Log.d(TAG,"create_sql:"+creat_sql);
         db.execSQL(creat_sql);
+
+        String creat_sql2="CREATE TABLE IF NOT EXISTS StudentUser"
+                +"(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+                +"StudentNum VARCHAR  NOT NULL,"
+                +"StudentName VARCHAR NOT NULL,"
+                +"StudentSex VARCHAR NOT NULL,"
+                +"StudentClass VARCHAR NOT NULL,"
+                +"StudentCollege VARCHAR NOT NULL,"
+                +"StudentProfession VARCHAR NOT NULL);";
+        db.execSQL(creat_sql2);
 
     }
 
@@ -80,9 +84,7 @@ public class LoginHelper extends SQLiteOpenHelper {
        return result;
     }
 
-
 /*
-
     public long  insert(UserInfo info){
         ContentValues cv=new ContentValues();
         cv.put("StudentNum",info.StudentNum);
@@ -91,7 +93,6 @@ public class LoginHelper extends SQLiteOpenHelper {
         //插入成功，返回插入行的ID
         return result;
     }
-
 
     public  int  update(UserInfo info ){
         String studentNum=info.StudentNum;
@@ -111,7 +112,6 @@ public class LoginHelper extends SQLiteOpenHelper {
             return result;
         }
     }*/
-
 
 }
 

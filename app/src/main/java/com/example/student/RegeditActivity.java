@@ -34,7 +34,7 @@ public class RegeditActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        mHelper=new LoginHelper(RegeditActivity.this,"Student",null,1);
+        mHelper=new LoginHelper(RegeditActivity.this,"user.db",null,1);
         sqliteDatabase=mHelper.getWritableDatabase();
         String stunum=StuNum.getText().toString();
         String stupwd=StuPwd.getText().toString();
@@ -60,6 +60,7 @@ public class RegeditActivity extends AppCompatActivity implements View.OnClickLi
         {
             RegeditActivity.this.finish();
         }
+        mHelper.close();
 
     }
 }

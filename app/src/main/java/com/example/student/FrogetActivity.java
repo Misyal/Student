@@ -36,7 +36,7 @@ public class FrogetActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        mHelper=new LoginHelper(FrogetActivity.this,"Student",null,1);
+        mHelper=new LoginHelper(FrogetActivity.this,"user.db",null,1);
         sqLiteDatabase=mHelper.getWritableDatabase();
         if(v.getId()==R.id.Bt_verifycode){
             //获取验证码
@@ -70,7 +70,7 @@ public class FrogetActivity extends AppCompatActivity implements View.OnClickLis
         else if(v.getId()==R.id.cancel){
             FrogetActivity.this.finish();
         }
-
+        mHelper.close();
 
     }
 }

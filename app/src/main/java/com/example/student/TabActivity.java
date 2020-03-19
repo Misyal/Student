@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -36,7 +37,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         MainPage = findViewById(R.id.mainpage);
         Scan = findViewById(R.id.scan);
         Setting = findViewById(R.id.setting);
-        tv=findViewById(R.id.title);
+        tv = findViewById(R.id.title);
         MainPage.setOnClickListener(this);
         Scan.setOnClickListener(this);
         Setting.setOnClickListener(this);
@@ -44,13 +45,13 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
 
         //页面继承类Fragment
-        mainPageFragment=new MainPageFragment();
-        scanFragment=new ScanFragment();
-        settingFragment=new SettingFragment();
+        mainPageFragment = new MainPageFragment();
+        scanFragment = new ScanFragment();
+        settingFragment = new SettingFragment();
 
 
         //把学号传给每一个Fragment
-        Bundle bundle=new Bundle();
+        Bundle bundle = new Bundle();
         bundle.putString("学号", StuNum);
         mainPageFragment.setArguments(bundle);
         scanFragment.setArguments(bundle);
@@ -62,28 +63,27 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-        public void onClick (View v){
-        if(v.getId()==R.id.mainpage){
+    public void onClick(View v) {
+        if (v.getId() == R.id.mainpage) {
             tv.setText("首页");
             replaceFragment(mainPageFragment);
 
-        }else if(v.getId()==R.id.scan){
+        } else if (v.getId() == R.id.scan) {
             tv.setText("扫描");
             replaceFragment(scanFragment);
-        }else if(v.getId()==R.id.setting){
+        } else if (v.getId() == R.id.setting) {
             tv.setText("我的");
             replaceFragment(settingFragment);
         }
 
-        }
+    }
 
-        //向Fragment中填充布局文件
-        private void replaceFragment(Fragment fragment){
-        fm=getSupportFragmentManager();
-        ft=fm.beginTransaction();
-        ft.replace(R.id.fragShow,fragment);
+    //向Fragment中填充布局文件
+    private void replaceFragment(Fragment fragment) {
+        fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+        ft.replace(R.id.fragShow, fragment);
         ft.commit();
-        }
-
+    }
 }
 

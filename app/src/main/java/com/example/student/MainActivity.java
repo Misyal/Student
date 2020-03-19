@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SQLiteDatabase sqliteDatabase;
     private LoginHelper mHelper;
 
-    private int mRequest=0;
     private boolean bRemember = true; // 是否记住密码
     private SharedPreferences mShare;// 声明一个共享参数对象
 
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        mHelper=new LoginHelper(MainActivity.this,"Student",null,1);
+        mHelper=new LoginHelper(MainActivity.this,"user.db",null,1);
         sqliteDatabase=mHelper.getWritableDatabase();
         String stunum = StuNum.getText().toString();
         String stupwd = StuPwd.getText().toString();
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {   //带着学号跳转到忘记密码页面
                 Intent intent = new Intent(this,FrogetActivity.class);
                 intent.putExtra("学号",stunum);
-                startActivityForResult(intent,mRequest);
+                startActivity(intent);
             }
         }
         else if(v.getId()==R.id.regedit){  //点击注册按钮
@@ -111,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         }
+        mHelper.close();
 
     }
 
