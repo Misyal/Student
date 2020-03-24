@@ -67,7 +67,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             Intent intent=new Intent(getActivity(), MyRecord.class);
             intent.putExtra("学号",stunum);
             startActivity(intent);
-
         }else {
             if(v.getId()==R.id.mymessage){
                 Intent intent =new Intent(getActivity(), MyMessage.class);
@@ -87,6 +86,26 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==0&&resultCode==1){
+            Bundle bundle=data.getExtras();
+            String name=bundle.getString("StuName");
+            sname.setText(name);
+            String sex=bundle.getString("StuSex");
+            ssex.setText(sex);
+            String cclass=bundle.getString("StuClass");
+            sclass.setText(cclass);
+            String college=bundle.getString("StuCollege");
+            scollege.setText(college);
+            String profession=bundle.getString("StuPro");
+            sprofession.setText(profession);
+
+        }
+
     }
 
 }

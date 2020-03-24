@@ -17,6 +17,8 @@ import com.example.student.Fragment.MainPageFragment;
 import com.example.student.Fragment.ScanFragment;
 import com.example.student.Fragment.SettingFragment;
 
+import java.util.Set;
+
 
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
     private String StuNum;
@@ -85,5 +87,6 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         ft.replace(R.id.fragShow, fragment);
         ft.commit();
     }
+
 }
 

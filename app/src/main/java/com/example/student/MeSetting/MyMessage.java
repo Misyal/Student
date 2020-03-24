@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.student.Info.StudentInfo;
 import com.example.student.R;
+import com.example.student.TabActivity;
 import com.example.student.database.MessageHelper;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MyMessage extends AppCompatActivity implements View.OnClickListener {
-
 
     private TextView tstunum;
     private String StuNum;
@@ -81,6 +82,15 @@ public class MyMessage extends AppCompatActivity implements View.OnClickListener
                             long  Result=messageHelper.Minsert(sqLiteDatabase,info);
                             if(Result>0){
                                 Toast.makeText(this,"成功",Toast.LENGTH_LONG).show();
+                                Intent intent=getIntent();
+                                Bundle bundle=new Bundle();
+                                bundle.putString("StuName",ename.getText().toString());
+                                bundle.putString("StuSex",esex.getSelectedItem().toString());
+                                bundle.putString("StuClass",eclass.getText().toString());
+                                bundle.putString("StuCollege",ecollege.getText().toString());
+                                bundle.putString("StuPro",eprofession.getText().toString());
+                                intent.putExtras(bundle);
+                                setResult(1,intent);
                                 this.finish();
                             }else {
                                 Toast.makeText(this,"失败",Toast.LENGTH_LONG).show();
@@ -94,7 +104,6 @@ public class MyMessage extends AppCompatActivity implements View.OnClickListener
         else {
             if (v.getId()==R.id.CANNEL){
                 this.finish();
-
             }
         }
         messageHelper.close();

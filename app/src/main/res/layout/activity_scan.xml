@@ -1,18 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fragment.ScanFragment">
 
+
     <TextView
+        android:id="@+id/tsacn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:text="扫码页面"
         android:textSize="30sp"
         android:gravity="center"
         >
     </TextView>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/tcourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tsacn">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前课程："
+            android:textSize="20dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/tvcourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20dp">
+        </TextView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_scancode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tcourse"
+        android:text="扫描座位二维码">
+
+    </Button>
+
+    <TextView
+        android:id="@+id/tseat"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/btn_scancode">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/btn_scanface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tseat"
+        android:text="人脸识别">
+
+    </Button>
+
+    <Button
+        android:id="@+id/btn_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:text="签到">
+    </Button>
+    <Button
+        android:id="@+id/btn_vercation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:layout_toRightOf="@+id/btn_sign"
+        android:text="请假">
+    </Button>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="400dp"
+        android:layout_height="336dp"
+        android:layout_below="@id/btn_sign"
+        android:clickable="true"
+        android:screenOrientation="portrait" />
+
+</RelativeLayout>
