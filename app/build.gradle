@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        test {
+            storeFile file('C:\\Users\\kiku\\Desktop\\test.jks')
+            storePassword '123456'
+            keyAlias = 'key'
+            keyPassword '654321'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.student"
@@ -39,4 +47,5 @@ dependencies {
     implementation files('libs/BaiduLBS_Android.jar')
     compileOnly 'com.google.zxing:core:3.0.0'
     implementation files('libs/core-3.0.0.jar')
+    implementation files('libs/aip-java-sdk-4.11.1.jar')
 }

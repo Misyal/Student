@@ -1,10 +1,11 @@
 package com.example.student.MeSetting;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.student.Face.FaceRegActivity;
 import com.example.student.Info.StudentInfo;
 import com.example.student.R;
-import com.example.student.TabActivity;
 import com.example.student.database.MessageHelper;
 
 import android.content.Intent;
@@ -12,6 +13,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +24,7 @@ public class MyMessage extends AppCompatActivity implements View.OnClickListener
     private TextView tstunum;
     private String StuNum;
     private TextView ename;
-    private TextView eclass,eprofession,ecollege;
+    private TextView eclass,eprofession,ecollege,tvface;
     private Spinner esex;
 
     private ArrayAdapter<String> adapter;
@@ -42,7 +45,9 @@ public class MyMessage extends AppCompatActivity implements View.OnClickListener
 
         findViewById(R.id.btn_add).setOnClickListener(this);
         findViewById(R.id.CANNEL).setOnClickListener(this);
+        findViewById(R.id.regface).setOnClickListener(this);
 
+        tvface=findViewById(R.id.tvface);
         ename=findViewById(R.id.eName);
         eclass=findViewById(R.id.eclass);
         ecollege=findViewById(R.id.ecollege);
@@ -100,13 +105,27 @@ public class MyMessage extends AppCompatActivity implements View.OnClickListener
                 }
             }
 
-        }
+        }else {
+            if(v.getId()==R.id.regface){
+                Intent intent=new Intent(MyMessage.this, FaceRegActivity.class);
+                intent.putExtra("学号",StuNum);
+                startActivityForResult(intent,1);
+            }
         else {
             if (v.getId()==R.id.CANNEL){
                 this.finish();
             }
         }
+        }
         messageHelper.close();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1&&resultCode==2){
+
+        }
     }
 }

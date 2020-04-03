@@ -153,7 +153,28 @@
             android:layout_toRightOf="@+id/Tprofession"
             >
         </EditText>
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp">
+
+
+        <Button
+            android:id="@+id/regface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="人脸注册" />
+
+        <TextView
+            android:id="@+id/tvface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="111111"
+            android:textSize="20sp"
+            android:layout_below="@+id/regface"
+            />
 
     </RelativeLayout>
 
@@ -169,7 +190,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="提交"></Button>
+            android:text="提交">
+        </Button>
 
         <Button
             android:id="@+id/CANNEL"
@@ -177,7 +199,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:text="取消"></Button>
+            android:text="取消">
+        </Button>
 
     </RelativeLayout>
 

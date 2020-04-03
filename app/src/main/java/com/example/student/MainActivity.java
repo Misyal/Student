@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText StuNum;
     private EditText StuPwd;
     private CheckBox Remeber;
+
     private SQLiteDatabase sqliteDatabase;
     private LoginHelper mHelper;
 

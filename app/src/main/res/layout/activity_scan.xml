@@ -66,6 +66,16 @@
 
     </Button>
 
+    <TextView
+        android:id="@+id/enable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:layout_toLeftOf="@+id/btn_sign"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:text=""/>
     <Button
         android:id="@+id/btn_sign"
         android:layout_width="wrap_content"

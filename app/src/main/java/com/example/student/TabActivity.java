@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,7 +15,6 @@ import com.example.student.Fragment.MainPageFragment;
 import com.example.student.Fragment.ScanFragment;
 import com.example.student.Fragment.SettingFragment;
 
-import java.util.Set;
 
 
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
@@ -31,6 +28,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     private FragmentManager fm;
     private FragmentTransaction ft;
     private TextView tv;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +58,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         scanFragment.setArguments(bundle);
         settingFragment.setArguments(bundle);
 
-        //默认首页
-        replaceFragment(mainPageFragment);
-        tv.setText("首页");
+            replaceFragment(mainPageFragment);
+            tv.setText("首页");
     }
 
 

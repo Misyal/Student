@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +26,20 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.CircleOptions;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
 import com.example.student.R;
 import com.example.student.zxing.android.CaptureActivity;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -41,14 +48,15 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
     private Button scanface;
     private Button sign;
     private Button ver;
-    private TextView tseat, tvcourse;
+    private TextView tseat, tvcourse,tvenable;
 
     // 定位相关
     private MapView mapView;
     private BaiduMap mBaiduMap;
-    private LocationClientOption mOption;//定位属性
-    private LocationClient client;//定位监听
+    private LocationClient locationClient;//定位监听
     boolean isFirstLoc = true;// 是否首次定位
+    private LatLng mDestion;
+    private double mDistance;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,18 +74,19 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
         ver.setOnClickListener(this);
         tseat = view.findViewById(R.id.tseat);
         tvcourse = view.findViewById(R.id.tvcourse);
+        tvenable=view.findViewById(R.id.enable);
 
         //地图初始化
         mapView = view.findViewById(R.id.bmapView);
         mBaiduMap=mapView.getMap();
         mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-        mBaiduMap.setMyLocationEnabled(true);//开启图层
+        mBaiduMap.setMyLocationEnabled(true);
 
-
-
-        //开启定位
-        getLocationClientOption();
-
+        if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
+        }else {
+        initLocation();
+        }
 
         return view;
     }
@@ -112,7 +121,14 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
                     Intent intent = new Intent(getActivity(), CaptureActivity.class);
                     startActivityForResult(intent, 0);
                 } else {
-                    Toast.makeText(getActivity(), "你拒绝了权限申请，可能无法打开相机扫码哟！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "你拒绝了权限申请，无法打开相机扫码！", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case 2:
+                if(grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    initLocation();
+                }else {
+                    Toast.makeText(getActivity(),"你拒绝了定位权限，无法正常使用！",Toast.LENGTH_LONG).show();
                 }
                 break;
             default:
@@ -134,80 +150,89 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    //开启定位
-    public void getLocationClientOption(){
-        mOption=new LocationClientOption();
-        mOption.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-        mOption.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系，如果配合百度地图使用，建议设置为bd09ll;
-        mOption.setScanSpan(2000);//可选，默认0，即仅定位一次，设置发起连续定位请求的间隔需要大于等于1000ms才是有效的
-        mOption.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-        mOption.setIsNeedLocationDescribe(false);//可选，设置是否需要地址描述
-        mOption.setNeedDeviceDirect(true);//可选，设置是否需要设备方向结果
-        mOption.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-        mOption.setIgnoreKillProcess(true);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-        mOption.setIsNeedLocationDescribe(false);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-        mOption.setIsNeedLocationPoiList(false);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-        mOption.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-        mOption.setOpenGps(true);//可选，默认false，设置是否开启Gps定位
-        mOption.setIsNeedAltitude(false);//可选，默认false，设置定位时是否需要海拔信息，默认不需要，除基础定位版本都可用
-        client = new LocationClient(getActivity().getApplicationContext());
-        client.registerLocationListener(BDAblistener);
-        client.setLocOption(mOption);
-        client.start();
+    private void initLocation(){
+        LocationClientOption option=new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setCoorType("bd0911");//返回定位结果坐标系，百度地图为ba0911
+        option.setScanSpan(2000);//时间间隔 5s
+        //可选，设置是否需要地址信息，默认不需要
+        option.setIsNeedAddress(true);
+        //可选，默认false,设置是否使用gps
+        option.setOpenGps(true);
+        //可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+        option.setLocationNotify(true);
+        //可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+        option.setIsNeedLocationDescribe(true);
+        //可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+        option.setIsNeedLocationPoiList(true);
+        //可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+        option.setIgnoreKillProcess(false);
+        //可选，默认false，设置是否收集CRASH信息，默认收集
+        option.SetIgnoreCacheException(false);
+        //可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
+        option.setEnableSimulateGps(false);
+        locationClient=new LocationClient(getActivity().getApplicationContext());
+        locationClient.setLocOption(option);//保存定位参数
+        MyLocationListener myListener = new MyLocationListener();
+        locationClient.registerLocationListener(myListener);
+        locationClient.start();
     }
 
-    private BDAbstractLocationListener BDAblistener=new BDAbstractLocationListener() {
+    public class MyLocationListener extends BDAbstractLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
-            // map view 销毁后不在处理新接收的位置
-            if (location == null || mapView == null)
-                return;
             //构造定位数据
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(location.getDirection())
                     .latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            // 设置地图中心点
-            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory
-                    .newMapStatus(new MapStatus.Builder().target(latLng)
-                            .overlook(-15).rotate(180).zoom(17).build());
-            mBaiduMap.setMapStatus(mapStatusUpdate);
-            if (isFirstLoc) {
-                LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-                mBaiduMap.animateMapStatus(u);
-                if (mBaiduMap.getLocationData()!=null)
-                    if (mBaiduMap.getLocationData().latitude==location.getLatitude()
-                            &&mBaiduMap.getLocationData().longitude==location.getLongitude()) {
-                        isFirstLoc = false;
-                    }
+                    .longitude(location.getLongitude())
+                    .build();
+            if(isFirstLoc){
+               LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(latLng);//更新坐标
+               mBaiduMap.animateMapStatus(u);
+               u=MapStatusUpdateFactory.zoomTo(18);
+               mBaiduMap.animateMapStatus(u);
+               //isFirstLoc=false;
             }
-            StringBuilder sb = new StringBuilder(256);
-            sb.append("time : ");
-            sb.append(location.getTime());
-            sb.append("\nerror code : ");
-            sb.append(location.getLocType());
-            sb.append("\nlatitude : ");
-            sb.append(location.getLatitude());//获取维度
-            sb.append("\nlontitude : ");
-            sb.append(location.getLongitude());//获取经度
-            sb.append("\nradius : ");
-            sb.append(location.getRadius());//获取定位精度半径，单位是米
-            if (location.getLocType() == BDLocation.TypeGpsLocation){//获取error code
-                sb.append("\nspeed : ");
-                sb.append(location.getSpeed());
-                sb.append("\nsatellite : ");
-                sb.append(location.getSatelliteNumber());
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation){
-                sb.append("\naddr : ");
-                sb.append(location.getAddrStr());
+            mBaiduMap.setMyLocationData(locData);
+            mBaiduMap.setMyLocationConfiguration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null));
+            Message message=new Message();
+            message.obj=location;
+            mHandler.sendMessage(message);
+        }
+    };
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            BDLocation location= (BDLocation) msg.obj;
+            LatLng locationPoint=new LatLng(location.getLatitude(),location.getLongitude());
+            mDestion=new LatLng(location.getLatitude(),location.getLongitude());
+            //setCircleOptions();
+            mDistance= DistanceUtil. getDistance(locationPoint,mDestion);
+            if(mDistance>50){
+                sign.setEnabled(false);
+                tvenable.setText("不在范围内，无法签到");
+                mBaiduMap.setMyLocationEnabled(true);
+            }else {
+                sign.setEnabled(true);
+                tvenable.setText("在范围内，可以签到");
+                mBaiduMap.setMyLocationEnabled(true);
             }
         }
     };
+
+    //设置打卡目标范围圈
+    private void setCircleOptions() {
+        if (mDestion == null) return;
+        OverlayOptions ooCircle = new CircleOptions().fillColor(0x4057FFF8)
+                .center(mDestion).stroke(new Stroke(1, 0xB6FFFFFF)).radius(50);
+        mBaiduMap.addOverlay(ooCircle);
+    }
 
 }
 
