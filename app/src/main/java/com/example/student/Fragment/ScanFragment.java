@@ -7,15 +7,22 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,14 +48,27 @@ import com.example.student.R;
 import com.example.student.zxing.android.CaptureActivity;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static android.app.Activity.RESULT_OK;
+import static android.media.MediaRecorder.VideoSource.CAMERA;
+import static com.example.student.Face.Face.runSerach;
+import static com.example.student.Face.Face.runUpload;
+import static com.example.student.utils.ImageUtil.getBitmapFormUri;
 
 public class ScanFragment extends Fragment implements View.OnClickListener {
     private Button scancode;
     private Button scanface;
     private Button sign;
     private Button ver;
-    private TextView tseat, tvcourse,tvenable;
+    private ImageView ImageView;
+    private TextView tseat, tvcourse,tvenable,tface;
+    private String StuNum;
+    private static int code=1;
 
     // 定位相关
     private MapView mapView;
@@ -57,6 +77,10 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
     boolean isFirstLoc = true;// 是否首次定位
     private LatLng mDestion;
     private double mDistance;
+
+    //定义图片的uri
+    private Uri imageUri,Uri1;
+    private Bitmap bitMap;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,9 +96,13 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
         sign.setOnClickListener(this);
         ver = view.findViewById(R.id.btn_vercation);
         ver.setOnClickListener(this);
+        ImageView=view.findViewById(R.id.ImageView);
         tseat = view.findViewById(R.id.tseat);
         tvcourse = view.findViewById(R.id.tvcourse);
         tvenable=view.findViewById(R.id.enable);
+        tface=view.findViewById(R.id.Tface);
+
+        StuNum=getActivity().getIntent().getStringExtra("学号");
 
         //地图初始化
         mapView = view.findViewById(R.id.bmapView);
@@ -85,7 +113,7 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
         if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},2);
         }else {
-        initLocation();
+            initLocation();
         }
 
         return view;
@@ -104,12 +132,44 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
         }
         if (v.getId() == R.id.btn_scanface) {
             //扫脸
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            builder.detectFileUriExposure();            //7.0拍照必加
+
+            Intent openFileIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            openFileIntent.putExtra(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+            //String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "JPEG_";
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Audio.Media.TITLE, imageFileName);
+            imageUri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+            openFileIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(openFileIntent, 3);
+
         }
         if (v.getId() == R.id.btn_sign) {
+            if(code!=0){
+                sign.setEnabled(false);
+            }else {
+                if(mDistance<50){
+                    sign.setEnabled(true);
+                    //插入操作
+
+                }else {
+                    sign.setEnabled(false);
+                }
+            }
             //签到
         }
         if (v.getId() == R.id.btn_vercation) {
             //上传请假图片
+            Intent albumIntent = new Intent(Intent.ACTION_PICK);
+           albumIntent.setType("image/*");
+            startActivityForResult(albumIntent, 4);
+
+            //上传照片至服务器，且插入请假状态
+
         }
     }
 
@@ -121,7 +181,7 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
                     Intent intent = new Intent(getActivity(), CaptureActivity.class);
                     startActivityForResult(intent, 0);
                 } else {
-                    Toast.makeText(getActivity(), "你拒绝了权限申请，无法打开相机扫码！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "你拒绝了权限申请，无法打开相机", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case 2:
@@ -147,6 +207,28 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
                 //Bitmap bitmap = data.getParcelableExtra("codedBitmap");
                 tseat.setText("座位是：" + content);
             }
+        }
+        if (requestCode == 3) {
+            try {
+                // 源图 bitMap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                // 需要进行图片压缩
+                bitMap = getBitmapFormUri(imageUri, getActivity().getApplicationContext());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            runSerach(StuNum, bitMap, fhandle);
+        }
+        if(requestCode==4){
+             Uri1 = data.getData();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(Uri1));
+                ImageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -215,11 +297,9 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
             //setCircleOptions();
             mDistance= DistanceUtil. getDistance(locationPoint,mDestion);
             if(mDistance>50){
-                sign.setEnabled(false);
                 tvenable.setText("不在范围内，无法签到");
                 mBaiduMap.setMyLocationEnabled(true);
             }else {
-                sign.setEnabled(true);
                 tvenable.setText("在范围内，可以签到");
                 mBaiduMap.setMyLocationEnabled(true);
             }
@@ -233,6 +313,32 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
                 .center(mDestion).stroke(new Stroke(1, 0xB6FFFFFF)).radius(50);
         mBaiduMap.addOverlay(ooCircle);
     }
+
+
+    private Handler fhandle =new Handler(){
+        public void handleMessage(@NonNull Message msg) {
+        super.handleMessage(msg);
+        switch (msg.what){
+            case 0:{
+                //Toast.makeText(getActivity().getApplicationContext(),"匹配成功,打卡成功",Toast.LENGTH_SHORT).show();
+                tface.setText("人脸识别通过");
+                code=0;
+                break;
+            }
+            case -1:{
+                //Toast.makeText(getActivity().getApplicationContext(),"人脸和当前账号不匹配",Toast.LENGTH_SHORT).show();
+                tface.setText("人脸和当前账号不匹配");
+                code=1;
+                break;
+            }
+            default:{
+                //Toast.makeText(getActivity().getApplicationContext(),"识别错误错误代码为"+msg.what,Toast.LENGTH_SHORT).show();
+                tface.setText("人脸识别未通过");
+                break;
+            }
+        }
+    }
+    };
 
 }
 
