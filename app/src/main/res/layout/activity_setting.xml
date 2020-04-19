@@ -38,7 +38,7 @@
             android:layout_width="80dp"
             android:layout_height="90dp"
             android:text="姓名:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/TName"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_toRightOf="@+id/EName"
             android:paddingLeft="20dp"
             android:text="性别:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
 
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/TSex"
-            android:textSize="35sp">
+            android:textSize="30sp">
 
         </TextView>
 
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="班级:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <TextView
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/TClass"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
 
@@ -107,7 +107,7 @@
             android:layout_width="80dp"
             android:layout_height="90dp"
             android:text="学院:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <TextView
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/TCollege"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
 
@@ -131,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="90dp"
             android:text="专业:"
-            android:textSize="35sp">
+            android:textSize="30sp">
 
         </TextView>
 
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/TProfession"
-            android:textSize="35sp"
+            android:textSize="30sp"
             >
         </TextView>
 

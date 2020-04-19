@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="学号："
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/Tstunum"
             android:text=""
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
     </RelativeLayout>
@@ -49,7 +49,7 @@
             android:layout_height="90dp"
             android:gravity="bottom"
             android:text="姓名:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <EditText
@@ -67,7 +67,7 @@
             android:gravity="bottom"
             android:paddingLeft="20dp"
             android:text="性别:"
-            android:textSize="35sp">
+            android:textSize="30sp">
 
         </TextView>
 
@@ -92,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="班级:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <EditText
@@ -118,7 +118,7 @@
             android:layout_height="90dp"
             android:gravity="bottom"
             android:text="学院:"
-            android:textSize="35sp">
+            android:textSize="30sp">
         </TextView>
 
         <EditText
@@ -142,7 +142,7 @@
             android:layout_height="90dp"
             android:gravity="bottom"
             android:text="专业:"
-            android:textSize="35sp">
+            android:textSize="30sp">
 
         </TextView>
 
@@ -171,8 +171,8 @@
             android:id="@+id/tvface"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="111111"
-            android:textSize="20sp"
+            android:text=" "
+            android:textSize="25sp"
             android:layout_below="@+id/regface"
             />
 
