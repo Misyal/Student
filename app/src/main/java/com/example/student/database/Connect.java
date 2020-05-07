@@ -10,7 +10,7 @@ public class Connect {
 
     public static Connection getConn() throws Exception {
 
-        String REMOTE_IP = "192.168.0.2";
+        String REMOTE_IP = "192.168.0.5";
         String URL = "jdbc:mysql://" + REMOTE_IP + "/mydb";
         String USER = "root";
         String PASSWORD = "123456";

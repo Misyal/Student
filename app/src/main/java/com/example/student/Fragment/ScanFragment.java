@@ -34,7 +34,6 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.CircleOptions;
-import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -48,16 +47,10 @@ import com.example.student.R;
 import com.example.student.zxing.android.CaptureActivity;
 
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static android.app.Activity.RESULT_OK;
-import static android.media.MediaRecorder.VideoSource.CAMERA;
 import static com.example.student.Face.Face.runSerach;
-import static com.example.student.Face.Face.runUpload;
 import static com.example.student.utils.ImageUtil.getBitmapFormUri;
 
 public class ScanFragment extends Fragment implements View.OnClickListener {
@@ -138,7 +131,6 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
 
             Intent openFileIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             openFileIntent.putExtra(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-            //String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = "JPEG_";
             ContentValues values = new ContentValues();
             values.put(MediaStore.Audio.Media.TITLE, imageFileName);
@@ -150,22 +142,25 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
         }
         if (v.getId() == R.id.btn_sign) {
             if(code!=0){
-                sign.setEnabled(false);
+                Toast.makeText(getActivity().getApplicationContext(),"未进行人脸识别",Toast.LENGTH_LONG).show();
+                //sign.setEnabled(false);
             }else {
-                if(mDistance<50){
-                    sign.setEnabled(true);
-                    //插入操作
-
+                if(mDistance>50){
+                    Toast.makeText(getActivity().getApplicationContext(),"不在签到氛围内",Toast.LENGTH_LONG).show();
+                    //sign.setEnabled(true);
                 }else {
-                    sign.setEnabled(false);
+
+
+                    //sign.setEnabled(false);
                 }
             }
-            //签到
-        }
+        }            //签到
+
+
         if (v.getId() == R.id.btn_vercation) {
             //上传请假图片
             Intent albumIntent = new Intent(Intent.ACTION_PICK);
-           albumIntent.setType("image/*");
+            albumIntent.setType("image/*");
             startActivityForResult(albumIntent, 4);
 
             //上传照片至服务器，且插入请假状态
@@ -221,13 +216,19 @@ public class ScanFragment extends Fragment implements View.OnClickListener {
             runSerach(StuNum, bitMap, fhandle);
         }
         if(requestCode==4){
-             Uri1 = data.getData();
+
             try {
+                if(data!=null){
+                    Uri1 = data.getData();
                 Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(Uri1));
                 ImageView.setImageBitmap(bitmap);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
 
         }
     }
